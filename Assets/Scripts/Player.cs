@@ -23,7 +23,18 @@ public class Player : NetworkBehaviour
             inputY = Input.GetAxisRaw("Vertical");
 
             rb.velocity = new Vector2(inputX, inputY) * speed;
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Debug.Log("Pedindo uma mensagem para o Server!");
+                TalkToServer();
+            }
         }
+    }
+
+    [Command]
+    void TalkToServer()
+    {
+        Debug.Log("Player pediu uma pizza!");
     }
 
 }
