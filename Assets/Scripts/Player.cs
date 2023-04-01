@@ -10,6 +10,8 @@ public class Player : NetworkBehaviour
     float inputY;
     public float speed = 3;
 
+    public int coins;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -35,6 +37,16 @@ public class Player : NetworkBehaviour
     void TalkToServer()
     {
         Debug.Log("Player pediu uma pizza!");
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Coin"))
+        {
+            coins++;
+            MyNetworkManager.spawnedCoins--;
+            Destroy(collision.gameObject);
+        }
     }
 
 }
