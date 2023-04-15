@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using System.Security.Cryptography;
+using UnityEngine.Events;
 
 public class MyNetworkManager : NetworkManager
 {
@@ -37,21 +38,30 @@ public class MyNetworkManager : NetworkManager
         Debug.Log("Um jogador saiu da partida...");
     }
 
+    public UnityEvent OnPlayerConnect;
+
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
+        OnPlayerConnect.Invoke();
         Transform startPoint;
+        Color color;
 
-        if(numPlayers == 0)
+        if (numPlayers == 0)
         {
             startPoint = spawnPoint1;
+            color = Color.red;
         }
         else
         {
             startPoint = spawnPoint2;
             InvokeRepeating("SpawnCoin", 2, 2);
+            color = Color.green;
         }
 
         GameObject new_player = Instantiate(playerPrefab, startPoint.position, startPoint.rotation);
+
+        new_player.GetComponent<Player>().playerColor = color;
+
         NetworkServer.AddPlayerForConnection(conn, new_player);
 
     }
