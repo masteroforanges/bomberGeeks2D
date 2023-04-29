@@ -50,11 +50,12 @@ public class MyNetworkManager : NetworkManager
         {
             startPoint = spawnPoint1;
             color = Color.red;
+            InvokeRepeating("SpawnCoin", 2, 2);
         }
         else
         {
             startPoint = spawnPoint2;
-            InvokeRepeating("SpawnCoin", 2, 2);
+            //InvokeRepeating("SpawnCoin", 2, 2);
             color = Color.green;
         }
 

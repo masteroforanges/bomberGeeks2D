@@ -5,18 +5,23 @@ using UnityEngine.Events;
 using Mirror;
 using System;
 
+[Serializable]
+public class IntEvent : UnityEvent<int> {}
+
 public class Player : NetworkBehaviour
 {
     Rigidbody2D rb;
     float inputX;
     float inputY;
     public float speed = 3;
+
+    [SyncVar]
+    public int Coins;
+
     [SyncVar]
     public Color playerColor;
 
-    [Serializable]
-    public class IntEvent : UnityEvent<int> {}
-
+    //Events
     public IntEvent OnCoinCollect;
 
     public int coins;
@@ -25,6 +30,7 @@ public class Player : NetworkBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         GetComponent<SpriteRenderer>().color = playerColor;
+        GameObject.FindGameObjectWithTag("HUD").GetComponent<HUD>().AddPlayerListener(this);
     }
 
     void Update()
